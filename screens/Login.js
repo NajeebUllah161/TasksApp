@@ -32,7 +32,6 @@ const Login = ({ navigation }) => {
     if (userLogin) {
       Alert.alert("Login", "Successfully Logged In")
       saveToken(userLogin.token);
-      console.log("TOKEN : ", userLogin.token);
       navigation.navigate("home");
       dispatch({ type: 'clearUserData' });
     }

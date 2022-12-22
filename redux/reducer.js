@@ -108,5 +108,48 @@ export const tasksReducer = createReducer(
       state.loadingAddTask = false;
       state.errorAddTask = action.payload;
     },
+    clearAddTaskData: (state) => {
+      state.dataAddTask = null;
+    },
+    clearAddTaskError: (state) => {
+      state.errorAddTask = false;
+    },
+
+    deleteTaskRequest: (state) => {
+      state.loadingDelTask = true;
+    },
+    deleteTaskSuccess: (state) => {
+      state.loadingDelTask = false;
+      state.successDelTask = true;
+    },
+    deleteTaskFailure: (state) => {
+      state.loadingDelTask = false;
+      state.errorDelTask = true;
+    },
+    clearDelTaskSuccess: (state) => {
+      state.successDelTask = false;
+    },
+    clearDelTaskError: (state) => {
+      state.errorDelTask = false;
+    },
+
+
+    updateTaskRequest: (state) => {
+      state.loadingUpdateTask = true;
+    },
+    updateTaskSuccess: (state) => {
+      state.loadingUpdateTask = false;
+      state.successUpdateTask = true;
+    },
+    updateTaskFailure: (state) => {
+      state.loadingUpdateTask = false;
+      state.errorUpdateTask = true;
+    },
+    clearUpdateTaskSuccess: (state) => {
+      state.successUpdateTask = false;
+    },
+    clearUpdateTaskError: (state) => {
+      state.errorUpdateTask = false;
+    },
   }
 );

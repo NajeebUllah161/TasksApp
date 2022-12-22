@@ -64,6 +64,7 @@ export const register = (email, password, password_confirmation) => async (dispa
 
 export const getTasks = (token) => async (dispatch) => {
   try {
+    console.log(token);
     dispatch({ type: "getTasksRequest" });
     const { data } = await axios.get(`${serverUrl}/items`, {
       headers: {
@@ -76,6 +77,69 @@ export const getTasks = (token) => async (dispatch) => {
     dispatch({
       type: "getTasksFailure",
       payload: error.response.data.message,
+    });
+  }
+};
+
+export const addTask = (title, description, token) => async (dispatch) => {
+  try {
+    dispatch({ type: "addTaskRequest" });
+
+    const { data } = await axios.post(`${serverUrl}/item`, { title, description }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+    });
+    dispatch({ type: "addTaskSuccess", payload: data });
+  } catch (error) {
+    dispatch({
+      type: "addTaskFailure",
+      payload: error.response.data.error,
+    });
+  }
+};
+
+
+export const deleteTask = (taskId, token) => async (dispatch) => {
+  try {
+    dispatch({ type: "deleteTaskRequest" });
+
+    const { data } = await axios.delete(`${serverUrl}/item/${taskId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+    });
+    dispatch({ type: "deleteTaskSuccess", payload: data.message });
+  } catch (error) {
+    console.log(error.response.data);
+    dispatch({
+      type: "deleteTaskFailure",
+      payload: error.response.data.error,
+    });
+  }
+};
+
+export const updateTask = (title, description, token, taskId) => async (dispatch) => {
+  try {
+    dispatch({ type: "updateTaskRequest" });
+
+    console.log("Title", title);
+    console.log("Description", description);
+    const { data } = await axios.put(`${serverUrl}/item/${taskId}`, { title, description }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+    });
+    console.log("Data : ", data);
+    dispatch({ type: "updateTaskSuccess", payload: data.message });
+  } catch (error) {
+    console.log(error.response.data);
+    dispatch({
+      type: "updateTaskFailure",
+      payload: error.response.data.error,
     });
   }
 };
